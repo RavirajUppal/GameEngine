@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/Engine/include",
+                "${workspaceFolder}/Engine/src",
+                "${workspaceFolder}/Editor/src",
+                "${workspaceFolder}/Game/src",
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "REALENGINE_BUILD_DLL"
+            ],
+            "macFrameworkPath": [
+                "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/bin/clang++",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "macos-clang-x64"
+        }
+    ],
+    "version": 4
+}

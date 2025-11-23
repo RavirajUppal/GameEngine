@@ -1,0 +1,45 @@
+# CMake build folders
+/build*/
+build*/
+
+# CMake files
+CMakeFiles/
+CMakeCache.txt
+CMakeUserPresets.json
+
+# macOS junk
+.DS_Store
+
+# Windows binary junk
+*.exe
+*.dll
+*.pdb
+*.ilk
+
+# Linux/macOS binary junk
+*.so
+*.dylib
+*.o
+*.obj
+
+# VSCode
+.vscode/*
+!.vscode/launch.json
+!.vscode/c_cpp_properties.json
+
+# Visual Studio generated files
+*.sln
+*.vcxproj*
+*.filters
+*.user
+*.log
+*.idb
+*.opendb
+*.db
+*.tlog
+*.suo
+*.userprefs
+
+# Other temp files
+*.log
+*.cache
