@@ -3,6 +3,7 @@
 #include "Core.h"
 #include "Event.h"
 #include "Window.h"
+#include "ApplicationEvent.h"
 
 namespace RealEngine {
     class REALENGINE_API Application{
