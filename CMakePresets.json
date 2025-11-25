@@ -1,36 +1,29 @@
 {
-  "version": 5,
-
+  "version": 3,
   "configurePresets": [
     {
-      "name": "base",
-      "hidden": true,
-      "generator": "Ninja",
-      "cacheVariables": {
-        "CMAKE_CXX_STANDARD": "17"
-      }
-    },
-
-    {
       "name": "mac-debug",
-      "inherits": "base",
+      "generator": "Unix Makefiles",
       "binaryDir": "build/mac-debug",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_C_COMPILER": "/usr/bin/clang",
+        "CMAKE_CXX_COMPILER": "/usr/bin/clang++"
       }
     },
     {
       "name": "mac-release",
-      "inherits": "base",
+      "generator": "Unix Makefiles",
       "binaryDir": "build/mac-release",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_C_COMPILER": "/usr/bin/clang",
+        "CMAKE_CXX_COMPILER": "/usr/bin/clang++"
       }
     },
-
     {
       "name": "win-debug",
-      "generator": "Visual Studio 17 2022",
+      "generator": "Ninja",
       "binaryDir": "build/win-debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
@@ -38,14 +31,13 @@
     },
     {
       "name": "win-release",
-      "generator": "Visual Studio 17 2022",
+      "generator": "Ninja",
       "binaryDir": "build/win-release",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
       }
     }
   ],
-
   "buildPresets": [
     {
       "name": "mac-debug-build",

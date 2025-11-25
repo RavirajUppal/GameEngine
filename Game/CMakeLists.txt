@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.21)
+
 project(Game LANGUAGES C CXX)
 
 file(GLOB_RECURSE GAME_SOURCES

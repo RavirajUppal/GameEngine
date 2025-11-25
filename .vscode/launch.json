@@ -8,10 +8,10 @@
             "name": "Run Editor",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/Editor/Editor",
+            "program": "${workspaceFolder}/build/mac-debug/Editor/Editor",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/Editor",
+            "cwd": "${workspaceFolder}",
             "environment": [
                 {
                     "name": "DYLD_LIBRARY_PATH",
@@ -19,16 +19,18 @@
                 }
             ],
             "MIMode": "lldb",
+            "console": "externalTerminal",
+            "externalConsole": true,
             "preLaunchTask": "CMake: build"
         },
         {
             "name": "Run Game",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/Game/Game",
+            "program": "${workspaceFolder}/build/mac-debug/Game/Game",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/Game",
+            "cwd": "${workspaceFolder}",
             "environment": [
                 {
                     "name": "DYLD_LIBRARY_PATH",
@@ -36,6 +38,8 @@
                 }
             ],
             "MIMode": "lldb",
+            "console": "externalTerminal",
+            "externalConsole": true,
             "preLaunchTask": "CMake: build"
         },
         {
@@ -46,6 +50,8 @@
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopOnEntry": false,
+            "console": "externalTerminal",
+            "externalConsole": true,
             "preLaunchTask": "CMake: build"
         }
     ]

@@ -10,7 +10,8 @@
                 "${workspaceFolder}/**"
             ],
             "defines": [
-                "REALENGINE_BUILD_DLL"
+                "REALENGINE_BUILD_DLL",
+                "REALENGINE_ENABLE_ASSERTS"
             ],
             "macFrameworkPath": [
                 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"

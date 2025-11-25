@@ -12,10 +12,10 @@ public:
 
     }
 
-    void Run()
-    {
-        LOG_CLIENT_INFO("FirstGame Running");
-    }
+    // void Run()
+    // {
+    //     LOG_CLIENT_INFO("FirstGame Running");
+    // }
 
 };
 

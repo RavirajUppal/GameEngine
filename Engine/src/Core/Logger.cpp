@@ -1,6 +1,5 @@
+#include "pch.h"
 #include "Logger.h"
-#include <iostream>
-#include <ctime>
 
 namespace RealEngine
 {
