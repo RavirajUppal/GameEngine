@@ -12,15 +12,16 @@ public:
 
     }
 
-    // void Run()
-    // {
-    //     LOG_CLIENT_INFO("FirstGame Running");
-    // }
+    void Run() override
+    {
+        RealEngine::Application::Run();
+    }
 
 };
 
 RealEngine::Application* RealEngine::CreateApplication()
 {
-    LOG_CLIENT_INFO("FirstGame created");
+    LOG_INFO("FirstGame created");
+
     return new FirstGame();
 }

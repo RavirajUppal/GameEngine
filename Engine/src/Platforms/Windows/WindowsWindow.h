@@ -8,10 +8,10 @@
 
 namespace RealEngine {
 
-    class MacWindow : public Window {
+    class WindowsWindow : public Window {
     public:
-        MacWindow(const WindowProperties& props);
-        virtual ~MacWindow();
+        WindowsWindow(const WindowProperties& props);
+        virtual ~WindowsWindow();
 
         void OnUpdate() override;
 

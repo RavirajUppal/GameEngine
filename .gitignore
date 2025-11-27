@@ -27,6 +27,9 @@ CMakeUserPresets.json
 !.vscode/launch.json
 !.vscode/c_cpp_properties.json
 
+# Vendor
+Engine/vendor/imgui/examples/
+
 # Visual Studio generated files
 *.sln
 *.vcxproj*

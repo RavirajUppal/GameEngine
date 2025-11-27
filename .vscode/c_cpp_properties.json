@@ -11,7 +11,9 @@
             ],
             "defines": [
                 "REALENGINE_BUILD_DLL",
-                "REALENGINE_ENABLE_ASSERTS"
+                "IMGUI_IMPL_OPENGL_LOADER_CUSTOM",
+                "IS_ENGINE_BUILD",
+                "IS_GAME_BUILD"
             ],
             "macFrameworkPath": [
                 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"

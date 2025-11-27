@@ -19,7 +19,6 @@
                 }
             ],
             "MIMode": "lldb",
-            "console": "externalTerminal",
             "externalConsole": true,
             "preLaunchTask": "CMake: build"
         },
@@ -38,7 +37,6 @@
                 }
             ],
             "MIMode": "lldb",
-            "console": "externalTerminal",
             "externalConsole": true,
             "preLaunchTask": "CMake: build"
         },
@@ -50,7 +48,6 @@
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopOnEntry": false,
-            "console": "externalTerminal",
             "externalConsole": true,
             "preLaunchTask": "CMake: build"
         }

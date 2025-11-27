@@ -1,4 +1,4 @@
-#include "MacWindow.h"
+#include "WindowsWindow.h"
 #include "ApplicationEvent.h"
 #include "KeyEvent.h"
 #include "MouseEvent.h"
@@ -7,12 +7,12 @@
 namespace RealEngine
 {
     static bool s_GLFWInitialized = false;
-    Window* Window::Create(WindowProperties props)
-    {
-        return new MacWindow(props);
-    }
+    // Window* Window::Create(WindowProperties props)
+    // {
+    //     return new WindowsWindow(props);
+    // }
 
-    MacWindow::MacWindow(const WindowProperties& props)
+    WindowsWindow::WindowsWindow(const WindowProperties& props)
     {
         m_Data.Title = props.Title;
         m_Data.Width = props.Width;
@@ -37,12 +37,12 @@ namespace RealEngine
         SetWindowCallbacks();
     }
 
-    MacWindow::~MacWindow()
+    WindowsWindow::~WindowsWindow()
     {
         Shutdown();
     }
 
-    void MacWindow::OnUpdate()
+    void WindowsWindow::OnUpdate()
     {
         glClearColor(0.5f, 0.5f, 0.1f, 1);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -50,7 +50,7 @@ namespace RealEngine
         glfwSwapBuffers(m_Window);
     }
     
-    void MacWindow::SetWindowCallbacks()
+    void WindowsWindow::SetWindowCallbacks()
     {
         glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height){
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
@@ -122,7 +122,7 @@ namespace RealEngine
         });
     }
     
-    void MacWindow::SetVSync(bool enabled)
+    void WindowsWindow::SetVSync(bool enabled)
     {
         if (enabled)
             glfwSwapInterval(1);
@@ -131,7 +131,7 @@ namespace RealEngine
         m_Data.VSync = enabled;
     }
     
-    void MacWindow::Shutdown()
+    void WindowsWindow::Shutdown()
     {
         glfwDestroyWindow(m_Window);
     }

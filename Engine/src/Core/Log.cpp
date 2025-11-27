@@ -3,14 +3,11 @@
 
 namespace RealEngine
 {
-    std::shared_ptr<Logger> Log::m_CoreLogger;
-    std::shared_ptr<Logger> Log::m_ClientLogger;
+    std::unique_ptr<Logger> Log::m_Logger;
 
     void Log::Init()
     {
-        m_CoreLogger = std::make_shared<Logger>();
-        LOG_CORE_INFO("Log Initialized");
-        m_ClientLogger = std::make_shared<Logger>();
-        LOG_CLIENT_INFO("Log Initialized");
+        m_Logger = std::make_unique<Logger>();
+        LOG_INFO("Log Initialized");
     }
 }

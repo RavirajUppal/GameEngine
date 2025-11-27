@@ -44,17 +44,17 @@ namespace RealEngine
         Log(source, LogLevel::Info, "Initialized\n");
     }
 
-    void Logger::Info(LogSource source, const std::string &message)
+    void Logger::LogInfo(LogSource source, const std::string &message)
     {
         Log(source, LogLevel::Info, message);
     }
 
-    void Logger::Warn(LogSource source, const std::string &message)
+    void Logger::LogWarn(LogSource source, const std::string &message)
     {
         Log(source, LogLevel::Warning, message);
     }
 
-    void Logger::Error(LogSource source, const std::string &message)
+    void Logger::LogError(LogSource source, const std::string &message)
     {
         Log(source, LogLevel::Error, message);
     }

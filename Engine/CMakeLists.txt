@@ -7,20 +7,36 @@ file(GLOB_RECURSE ENGINE_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h"
 )
 
-# add_library(Engine SHARED ${ENGINE_SOURCES})
+set(GLAD_SRC vendor/glad/src/glad.c)
 
-set(GLAD_SRC Vendor/glad/src/glad.c)
+# set(IMGUI_SRC
+#     vendor/imgui/imgui.cpp
+#     vendor/imgui/imgui_draw.cpp
+#     vendor/imgui/imgui_tables.cpp
+#     vendor/imgui/imgui_widgets.cpp
+#     vendor/imgui/backends/imgui_impl_glfw.cpp
+#     vendor/imgui/backends/imgui_impl_opengl3.cpp
+# )
+
+file(GLOB IMGUI_SRC
+    vendor/imgui/*.cpp
+    # vendor/imgui/backends/*.cpp
+    # vendor/imgui/backends/imgui_impl_opengl3.cpp
+)
 
 add_library(Engine SHARED
     ${ENGINE_SOURCES}
     ${GLAD_SRC}
+    ${IMGUI_SRC}
 )
 
 target_include_directories(Engine PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Core
     ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/glad/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Core
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui
+    # ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/backends
 )
 
 target_precompile_headers(Engine PUBLIC
@@ -30,9 +46,17 @@ target_precompile_headers(Engine PUBLIC
 target_compile_definitions(Engine
     PUBLIC
         REALENGINE_BUILD_DLL
-        REALENGINE_ENABLE_ASSERTS
+        IMGUI_IMPL_OPENGL_LOADER_CUSTOM
+        # IMGUI_IMPL_OPENGL_LOADER_GLAD
 )
 
+target_compile_definitions(Engine PRIVATE IS_ENGINE_BUILD)
+
+# set_source_files_properties(
+#     vendor/imgui/backends/imgui_impl_opengl3.cpp
+#     PROPERTIES
+#     COMPILE_DEFINITIONS IMGUI_IMPL_OPENGL_LOADER_GLAD
+# )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(Engine PUBLIC DEBUG)
@@ -55,13 +79,11 @@ if(APPLE)
     endif()
     
     
-    # Include directories
     target_include_directories(Engine PUBLIC
         ${GLFW_INCLUDE_DIR}
         /opt/homebrew/include # GLFW and GLM
     )
     
-    # Link libraries
     target_link_libraries(Engine
         ${GLFW_LIBRARY}
         "-framework OpenGL"

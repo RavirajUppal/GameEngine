@@ -20,6 +20,11 @@ add_custom_command(TARGET Game POST_BUILD
 #     BUILD_RPATH "@executable_path"
 # )
 
+target_compile_definitions(Game
+    PRIVATE
+        IS_GAME_BUILD
+)
+
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(Game PUBLIC DEBUG)
 else()
