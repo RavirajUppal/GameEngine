@@ -19,6 +19,7 @@ namespace RealEngine {
     public:
         using EventCallbackFn = std::function<void(Event&)>;
         virtual ~Window() = default;
+        virtual void* GetNativeWindow() const = 0;
         virtual void OnUpdate() = 0;
         virtual unsigned int GetWidth() const = 0;
         virtual unsigned int GetHeight() const = 0;

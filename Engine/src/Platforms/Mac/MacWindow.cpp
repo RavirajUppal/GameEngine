@@ -1,8 +1,12 @@
+#include "pch.h"
 #include "MacWindow.h"
 #include "ApplicationEvent.h"
 #include "KeyEvent.h"
 #include "MouseEvent.h"
 #include "Log.h"
+
+#include "Input.h"
+#include "KeyCodes.h"
 
 namespace RealEngine
 {
@@ -18,13 +22,13 @@ namespace RealEngine
         m_Data.Width = props.Width;
         m_Data.Height = props.Height;
         
-        LOG_INFO("Creating window {0} ({1}, {2})");
+        LOG_INFO("Creating window: {} ({}, {})", props.Title, props.Width, props.Height);
         
         if(!s_GLFWInitialized){
             int success = glfwInit();
             REALENGINE_ASSERT(success, "Could not initialize GLFW!");
             glfwSetErrorCallback([](int error, const char* description){
-                LOG_ERROR("GLFW Error ({0}): {1}");
+                LOG_ERROR("GLFW Error ({}): {}", error, description);
             });
             s_GLFWInitialized = true;
         }

@@ -13,6 +13,7 @@ namespace RealEngine {
         MacWindow(const WindowProperties& props);
         virtual ~MacWindow();
 
+        void* GetNativeWindow() const override { return m_Window; }
         void OnUpdate() override;
 
         unsigned int GetWidth() const override { return m_Data.Width; }

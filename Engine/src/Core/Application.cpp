@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "Log.h"
 #include <glad/glad.h>
+#include "KeyEvent.h"
+#include "ImGui/ImGuiLayer.h"
 
 namespace RealEngine
 {
@@ -13,11 +15,12 @@ namespace RealEngine
         s_Instance = this;
         m_Windows = std::unique_ptr<Window>(Window::Create());
         m_Windows->SetEventCallback([this](Event& e){ this->OnEvent(e); });
+        PushLayer(new RealEngine::ImGuiLayer());
     }
 
     Application::~Application()
     {
-        m_LayerStack.~LayerStack();
+        LOG_INFO("Destroying Application {}");
     }
 
     void Application::OnEvent(Event& e)
@@ -25,7 +28,7 @@ namespace RealEngine
         EventDispatcher dispatcher(e);
         // dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
         dispatcher.Dispatch<WindowCloseEvent>([this](WindowCloseEvent& e) { return this->OnWindowClose(e); });
-        LOG_INFO(e.ToString());
+        // LOG_INFO(e.ToString());
 
         for(auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
         {
@@ -44,25 +47,21 @@ namespace RealEngine
     void Application::PushLayer(Layer *layer)
     {
         m_LayerStack.PushLayer(layer);
-        layer->OnAttach();
     }
 
     void Application::PopLayer(Layer *layer)
     {
         m_LayerStack.PopLayer(layer);
-        layer->OnDetach();
     }
 
     void Application::PushOverlay(Layer *layer)
     {
         m_LayerStack.PushOverlay(layer);
-        layer->OnAttach();
     }
 
     void Application::PopOverlay(Layer *layer)
     {
         m_LayerStack.PopOverlay(layer);
-        layer->OnDetach();
     }
 
     void Application::Run()
