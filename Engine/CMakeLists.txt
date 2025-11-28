@@ -9,19 +9,11 @@ file(GLOB_RECURSE ENGINE_SOURCES
 
 set(GLAD_SRC vendor/glad/src/glad.c)
 
-# set(IMGUI_SRC
-#     vendor/imgui/imgui.cpp
-#     vendor/imgui/imgui_draw.cpp
-#     vendor/imgui/imgui_tables.cpp
-#     vendor/imgui/imgui_widgets.cpp
-#     vendor/imgui/backends/imgui_impl_glfw.cpp
-#     vendor/imgui/backends/imgui_impl_opengl3.cpp
-# )
 
 file(GLOB IMGUI_SRC
     vendor/imgui/*.cpp
-    # vendor/imgui/backends/*.cpp
-    # vendor/imgui/backends/imgui_impl_opengl3.cpp
+    vendor/imgui/backends/imgui_impl_glfw.cpp
+    vendor/imgui/backends/imgui_impl_opengl3.cpp
 )
 
 add_library(Engine SHARED
@@ -47,16 +39,10 @@ target_compile_definitions(Engine
     PUBLIC
         REALENGINE_BUILD_DLL
         IMGUI_IMPL_OPENGL_LOADER_CUSTOM
-        # IMGUI_IMPL_OPENGL_LOADER_GLAD
 )
 
 target_compile_definitions(Engine PRIVATE IS_ENGINE_BUILD)
 
-# set_source_files_properties(
-#     vendor/imgui/backends/imgui_impl_opengl3.cpp
-#     PROPERTIES
-#     COMPILE_DEFINITIONS IMGUI_IMPL_OPENGL_LOADER_GLAD
-# )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(Engine PUBLIC DEBUG)

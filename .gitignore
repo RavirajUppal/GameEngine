@@ -29,6 +29,7 @@ CMakeUserPresets.json
 
 # Vendor
 Engine/vendor/imgui/examples/
+imgui.ini
 
 # Visual Studio generated files
 *.sln

@@ -5,6 +5,7 @@
 #include "Window.h"
 #include "ApplicationEvent.h"
 #include "LayerStack.h"
+#include "ImGui/ImGuiLayer.h"
 
 namespace RealEngine {
     class REALENGINE_API Application{
@@ -23,6 +24,7 @@ namespace RealEngine {
     private:
         bool m_Running = true;
         std::unique_ptr<Window> m_Windows;
+        ImGuiLayer* m_ImGuiLayer;
         LayerStack m_LayerStack;
         static Application* s_Instance;
     };

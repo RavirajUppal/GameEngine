@@ -15,7 +15,8 @@ namespace RealEngine
         s_Instance = this;
         m_Windows = std::unique_ptr<Window>(Window::Create());
         m_Windows->SetEventCallback([this](Event& e){ this->OnEvent(e); });
-        PushLayer(new RealEngine::ImGuiLayer());
+        m_ImGuiLayer = new ImGuiLayer();
+        PushLayer(m_ImGuiLayer);
     }
 
     Application::~Application()
@@ -72,6 +73,11 @@ namespace RealEngine
             m_Windows->OnUpdate();
             for(Layer* layer : m_LayerStack)
                 layer->OnUpdate();
+
+            m_ImGuiLayer->Begin();
+            for(Layer* layer : m_LayerStack)
+                layer->OnImGuiRender();
+            m_ImGuiLayer->End();
         }
     }
 }
