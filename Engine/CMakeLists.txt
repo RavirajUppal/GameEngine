@@ -36,7 +36,7 @@ target_include_directories(Engine PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Core
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui
-    # ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/backends
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm
 )
 
 target_precompile_headers(Engine PUBLIC
