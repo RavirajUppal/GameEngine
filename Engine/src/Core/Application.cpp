@@ -70,14 +70,18 @@ namespace RealEngine
         LOG_INFO("App running");
         while(m_Running)
         {
-            m_Windows->OnUpdate();
-            for(Layer* layer : m_LayerStack)
-                layer->OnUpdate();
+            glClearColor(0.5f, 0.0f, 0.5f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
 
+            for(Layer* layer : m_LayerStack)
+            layer->OnUpdate();
+            
             m_ImGuiLayer->Begin();
             for(Layer* layer : m_LayerStack)
-                layer->OnImGuiRender();
+            layer->OnImGuiRender();
             m_ImGuiLayer->End();
+
+            m_Windows->OnUpdate();
         }
     }
 }
