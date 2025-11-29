@@ -8,10 +8,16 @@
 #define API_IMPORT
 #endif
 
+// #ifdef REALENGINE_BUILD_DLL
+// #define REALENGINE_API API_EXPORT
+// #else
+// #define REALENGINE_API API_IMPORT
+// #endif
+
 #ifdef REALENGINE_BUILD_DLL
-#define REALENGINE_API API_EXPORT
+#define REALENGINE_API 
 #else
-#define REALENGINE_API API_IMPORT
+#define REALENGINE_API 
 #endif
 
 #ifndef NDEBUG

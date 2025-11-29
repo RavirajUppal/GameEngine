@@ -1,9 +1,11 @@
 #include "pch.h"
 #include "Application.h"
-#include "Log.h"
+#include "Logging/Log.h"
 #include <glad/glad.h>
-#include "KeyEvent.h"
+#include "Events/KeyEvent.h"
 #include "ImGui/ImGuiLayer.h"
+#include "Renderer/RenderCommand.h"
+#include "Renderer/Renderer.h"
 
 namespace RealEngine
 {
@@ -17,6 +19,31 @@ namespace RealEngine
         m_Windows->SetEventCallback([this](Event& e){ this->OnEvent(e); });
         m_ImGuiLayer = new ImGuiLayer();
         PushLayer(m_ImGuiLayer);
+        
+        shader = std::make_shared<Shader>(SHADER_DIR "Default.vert", SHADER_DIR "Default.frag");
+        float vertices[3 * 7] ={
+            -0.5f, -0.5, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+            0.5f, -0.5, 0.0f,  0.0f, 1.0f, 0.0f, 1.0f,
+            0.0f, 0.5, 0.0f,   0.0f, 0.0f, 1.0f, 1.0f,
+        };
+
+        vao.reset(VertexArray::Create());
+
+        vbo.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+
+        BufferLayout layout = {
+            {ShaderDataType::Vec3, "a_Position"},
+            {ShaderDataType::Vec4, "a_Color"}
+        };
+        vbo->SetLayout(layout);
+
+        uint32_t indices[] = {0, 1, 2};
+        ibo.reset(IndexBuffer::Create(indices, sizeof(indices)/ sizeof(uint32_t)));
+
+        vao->AddVertexBuffer(vbo);
+        vao->SetIndexBuffer(ibo);
+        shader->Activate();
+        shader->PrintActiveUniforms();
     }
 
     Application::~Application()
@@ -68,10 +95,21 @@ namespace RealEngine
     void Application::Run()
     {
         LOG_INFO("App running");
+
         while(m_Running)
         {
             glClearColor(0.5f, 0.0f, 0.5f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
+
+            RenderCommand::SetClearColor({0.3f, 0.4f, 0.5f, 1.0f});
+            RenderCommand::Clear();
+
+            Renderer::BeginScene();
+
+            shader->Activate();
+            Renderer::Submit(vao);
+
+            Renderer::EndScene();
 
             for(Layer* layer : m_LayerStack)
             layer->OnUpdate();

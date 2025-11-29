@@ -16,7 +16,7 @@ file(GLOB IMGUI_SRC
     vendor/imgui/backends/imgui_impl_opengl3.cpp
 )
 
-add_library(Engine SHARED
+add_library(Engine STATIC
     ${ENGINE_SOURCES}
     ${GLAD_SRC}
     ${IMGUI_SRC}
@@ -41,7 +41,12 @@ target_compile_definitions(Engine
         IMGUI_IMPL_OPENGL_LOADER_CUSTOM
 )
 
-target_compile_definitions(Engine PRIVATE IS_ENGINE_BUILD)
+target_compile_definitions(Engine 
+    PRIVATE 
+        IS_ENGINE_BUILD
+        SHADER_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}/src/Resources/Shaders/\"
+        # TEXTURE_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}/src/Resources/Textures/\"
+)
 
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -67,7 +72,7 @@ if(APPLE)
     
     target_include_directories(Engine PUBLIC
         ${GLFW_INCLUDE_DIR}
-        /opt/homebrew/include # GLFW and GLM
+        # /opt/homebrew/include # GLFW and GLM
     )
     
     target_link_libraries(Engine

@@ -1,12 +1,13 @@
 #include "pch.h"
 #include "MacWindow.h"
-#include "ApplicationEvent.h"
-#include "KeyEvent.h"
-#include "MouseEvent.h"
-#include "Log.h"
+#include "Events/ApplicationEvent.h"
+#include "Events/KeyEvent.h"
+#include "Events/MouseEvent.h"
+#include "Logging/Log.h"
+#include "Platforms/OpenGL/OpenGLContext.h"
 
-#include "Input.h"
-#include "KeyCodes.h"
+#include "Input/Input.h"
+#include "Input/KeyCodes.h"
 
 namespace RealEngine
 {
@@ -37,9 +38,11 @@ namespace RealEngine
             s_GLFWInitialized = true;
         }
         m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), nullptr, nullptr);
-        glfwMakeContextCurrent(m_Window);
-        auto success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-        REALENGINE_ASSERT(success, "Could not load glad!");
+        m_Context = new OpenGLContext(m_Window);
+        m_Context->Init();
+        // glfwMakeContextCurrent(m_Window);
+        // auto success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        // REALENGINE_ASSERT(success, "Could not load glad!");
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
         SetWindowCallbacks();
@@ -53,7 +56,8 @@ namespace RealEngine
     void MacWindow::OnUpdate()
     {
         glfwPollEvents();
-        glfwSwapBuffers(m_Window);
+        // glfwSwapBuffers(m_Window);
+        m_Context->SwapBuffers();
     }
     
     void MacWindow::SetWindowCallbacks()

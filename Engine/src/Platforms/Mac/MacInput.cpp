@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "MacInput.h"
 #include "Application.h"
-#include "Log.h"
+#include "Logging/Log.h"
 
 #include <GLFW/glfw3.h>
 

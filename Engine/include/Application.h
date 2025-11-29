@@ -1,11 +1,15 @@
 #pragma once
 
 #include "Core.h"
-#include "Event.h"
+#include "Events/Event.h"
 #include "Window.h"
-#include "ApplicationEvent.h"
+#include "Events/ApplicationEvent.h"
 #include "LayerStack.h"
 #include "ImGui/ImGuiLayer.h"
+#include "Platforms/OpenGL/OpenGLVertexArray.h"
+#include "Platforms/OpenGL/OpenGLBuffer.h"
+#include "Renderer/Shader.h"
+
 
 namespace RealEngine {
     class REALENGINE_API Application{
@@ -27,6 +31,11 @@ namespace RealEngine {
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_LayerStack;
         static Application* s_Instance;
+
+        std::shared_ptr<Shader> shader;
+        std::shared_ptr<VertexArray> vao;
+        std::shared_ptr<VertexBuffer> vbo;
+        std::shared_ptr<IndexBuffer> ibo;
     };
 
     Application* CreateApplication();

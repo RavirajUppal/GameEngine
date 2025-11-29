@@ -14,11 +14,12 @@ namespace RealEngine {
         virtual ~MacWindow();
 
         void* GetNativeWindow() const override { return m_Window; }
-        void OnUpdate() override;
-
+        GraphicsContext* GetCurrentContext() override { return m_Context; }
+        
         unsigned int GetWidth() const override { return m_Data.Width; }
         unsigned int GetHeight() const override { return m_Data.Height; }
-
+        
+        void OnUpdate() override;
         void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
         void SetVSync(bool enabled) override;
         bool IsVSync() const override { return m_Data.VSync; }
@@ -28,6 +29,7 @@ namespace RealEngine {
         virtual void Shutdown();
 
         GLFWwindow* m_Window;
+        GraphicsContext* m_Context;
         struct WindowData {
             std::string Title;
             unsigned int Width, Height;

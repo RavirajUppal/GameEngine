@@ -1,5 +1,5 @@
 #pragma once
-#include "Log.h"
+#include "Logging/Log.h"
 
 #include "imgui.h"
 
@@ -8,7 +8,7 @@ extern RealEngine::Application* RealEngine::CreateApplication();
 int main(int argc, char** argv)
 {
     RealEngine::Log::Init();
-    LOG_INFO("RealEngine Initialized");
+    LOG_INFO("Entry Point");
     auto app = RealEngine::CreateApplication();
     app->Run();
     delete app;

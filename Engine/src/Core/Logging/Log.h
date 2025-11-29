@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include "Core.h"
-#include "Logger.h"
+#include "Logging/Logger.h"
 
 #ifdef NDEBUG
 

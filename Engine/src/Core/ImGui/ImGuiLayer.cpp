@@ -1,6 +1,6 @@
-#include "ImGuiLayer.h"
+#include "ImGui/ImGuiLayer.h"
 #include "Application.h"
-#include "Log.h"
+#include "Logging/Log.h"
 
 #include "imgui.h"
 #include "backends/imgui_impl_glfw.h"
