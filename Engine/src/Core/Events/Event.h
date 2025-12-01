@@ -47,8 +47,8 @@ namespace RealEngine {
     };
 
     class EventDispatcher {
-        template<typename T>
-        using func = std::function<bool(T&)>;
+        // template<typename T>
+        // using func = std::function<bool(Event&)>;
         public:
         EventDispatcher(Event& event)
             : m_Event(event) {}

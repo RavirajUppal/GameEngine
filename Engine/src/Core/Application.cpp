@@ -20,7 +20,7 @@ namespace RealEngine
         m_ImGuiLayer = new ImGuiLayer();
         PushLayer(m_ImGuiLayer);
         
-        shader = std::make_shared<Shader>(SHADER_DIR "Default.vert", SHADER_DIR "Default.frag");
+        shader.reset(Shader::Create(SHADER_DIR "Default.vert", SHADER_DIR "Default.frag"));
         float vertices[3 * 7] ={
             -0.5f, -0.5, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
             0.5f, -0.5, 0.0f,  0.0f, 1.0f, 0.0f, 1.0f,
@@ -39,11 +39,10 @@ namespace RealEngine
 
         uint32_t indices[] = {0, 1, 2};
         ibo.reset(IndexBuffer::Create(indices, sizeof(indices)/ sizeof(uint32_t)));
-
+        
         vao->AddVertexBuffer(vbo);
         vao->SetIndexBuffer(ibo);
         shader->Activate();
-        shader->PrintActiveUniforms();
     }
 
     Application::~Application()
@@ -54,8 +53,8 @@ namespace RealEngine
     void Application::OnEvent(Event& e)
     {
         EventDispatcher dispatcher(e);
+        dispatcher.Dispatch<WindowCloseEvent>([this](WindowCloseEvent& event) { return this->OnWindowClose(event); });
         // dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
-        dispatcher.Dispatch<WindowCloseEvent>([this](WindowCloseEvent& e) { return this->OnWindowClose(e); });
         // LOG_INFO(e.ToString());
 
         for(auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
@@ -112,11 +111,11 @@ namespace RealEngine
             Renderer::EndScene();
 
             for(Layer* layer : m_LayerStack)
-            layer->OnUpdate();
+                layer->OnUpdate();
             
             m_ImGuiLayer->Begin();
             for(Layer* layer : m_LayerStack)
-            layer->OnImGuiRender();
+                layer->OnImGuiRender();
             m_ImGuiLayer->End();
 
             m_Windows->OnUpdate();

@@ -7,20 +7,13 @@
 
 namespace RealEngine
 {
-    std::string get_file_contents(const char* filename);
-
     class REALENGINE_API Shader
     {
     public:
-        Shader(const char* vertexFilePath, const char* fragmentFilePath, const char* geometryFilePath = nullptr);
         virtual ~Shader() = default;
-	    void Activate();
-	    void Delete();
-        void PrintActiveUniforms();
-        
-    private:
-	    uint32_t CompileShader(uint32_t type, const char* source);
-	    void CompilerErrors(unsigned int shader, const char* type);
-        uint32_t m_RendererID;
+	    virtual void Activate() = 0;
+	    virtual void Delete() = 0;
+
+        static Shader* Create(const char* vertexFilePath, const char* fragmentFilePath, const char* geometryFilePath = nullptr);
     };
 }
