@@ -8,6 +8,10 @@ namespace RealEngine
     class REALENGINE_API RenderCommand
     {
     public:
+        static void Init(){
+            s_RendererAPI->Init();
+        }
+
         static void SetClearColor(const glm::vec4& color){
             s_RendererAPI->SetClearColor(color);
         }

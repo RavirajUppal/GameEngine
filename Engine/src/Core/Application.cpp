@@ -4,8 +4,8 @@
 #include <glad/glad.h>
 #include "Events/KeyEvent.h"
 #include "ImGui/ImGuiLayer.h"
-#include "Renderer/RenderCommand.h"
-#include "Renderer/Renderer.h"
+#include "time.h"
+#include <GLFW/glfw3.h>
 
 namespace RealEngine
 {
@@ -19,30 +19,6 @@ namespace RealEngine
         m_Windows->SetEventCallback([this](Event& e){ this->OnEvent(e); });
         m_ImGuiLayer = new ImGuiLayer();
         PushLayer(m_ImGuiLayer);
-        
-        shader.reset(Shader::Create(SHADER_DIR "Default.vert", SHADER_DIR "Default.frag"));
-        float vertices[3 * 7] ={
-            -0.5f, -0.5, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-            0.5f, -0.5, 0.0f,  0.0f, 1.0f, 0.0f, 1.0f,
-            0.0f, 0.5, 0.0f,   0.0f, 0.0f, 1.0f, 1.0f,
-        };
-
-        vao.reset(VertexArray::Create());
-
-        vbo.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
-
-        BufferLayout layout = {
-            {ShaderDataType::Vec3, "a_Position"},
-            {ShaderDataType::Vec4, "a_Color"}
-        };
-        vbo->SetLayout(layout);
-
-        uint32_t indices[] = {0, 1, 2};
-        ibo.reset(IndexBuffer::Create(indices, sizeof(indices)/ sizeof(uint32_t)));
-        
-        vao->AddVertexBuffer(vbo);
-        vao->SetIndexBuffer(ibo);
-        shader->Activate();
     }
 
     Application::~Application()
@@ -97,21 +73,12 @@ namespace RealEngine
 
         while(m_Running)
         {
-            glClearColor(0.5f, 0.0f, 0.5f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            RenderCommand::SetClearColor({0.3f, 0.4f, 0.5f, 1.0f});
-            RenderCommand::Clear();
-
-            Renderer::BeginScene();
-
-            shader->Activate();
-            Renderer::Submit(vao);
-
-            Renderer::EndScene();
+            float time = (float)glfwGetTime();
+            TimeStep delta = time - m_LastFrameTime;
+            m_LastFrameTime = time;
 
             for(Layer* layer : m_LayerStack)
-                layer->OnUpdate();
+                layer->OnUpdate(delta);
             
             m_ImGuiLayer->Begin();
             for(Layer* layer : m_LayerStack)

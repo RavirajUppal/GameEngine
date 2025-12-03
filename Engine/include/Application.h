@@ -9,6 +9,8 @@
 #include "Platforms/OpenGL/OpenGLVertexArray.h"
 #include "Platforms/OpenGL/OpenGLBuffer.h"
 #include "Renderer/Shader.h"
+#include "Renderer/Texture.h"
+#include "Renderer/OrthographicCameraController.h"
 
 
 namespace RealEngine {
@@ -31,11 +33,7 @@ namespace RealEngine {
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_LayerStack;
         static Application* s_Instance;
-
-        std::shared_ptr<Shader> shader;
-        std::shared_ptr<VertexArray> vao;
-        std::shared_ptr<VertexBuffer> vbo;
-        std::shared_ptr<IndexBuffer> ibo;
+        float m_LastFrameTime = 0.0f;
     };
 
     Application* CreateApplication();

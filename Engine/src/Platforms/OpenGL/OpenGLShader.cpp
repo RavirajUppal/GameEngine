@@ -21,23 +21,23 @@ namespace RealEngine
         throw std::runtime_error("Failed to open file: " + std::string(filename));
     }
 
-    OpenGLShader::OpenGLShader(const char *vertexPath, const char *fragmentPath, const char *geometryPath)
+    OpenGLShader::OpenGLShader(const std::string& name, std::string_view vertexPath, std::string_view fragmentPath, std::string_view geometryPath)
+        : m_Name(name)
     {
         std::string vertexCode;
         std::string fragmentCode;
         std::string geometryCode;
 
-        std::string defineStr = "\n#define USE_GEOMETRY\n";
-
         try
         {
-            vertexCode = get_file_contents(vertexPath);
-            fragmentCode = get_file_contents(fragmentPath);
-            if (geometryPath != nullptr)
+            vertexCode = get_file_contents(vertexPath.data());
+            fragmentCode = get_file_contents(fragmentPath.data());
+            if (!geometryPath.empty())
             {
-                geometryCode = get_file_contents(geometryPath);
+                geometryCode = get_file_contents(geometryPath.data());
                 size_t pos = vertexCode.find('\n');
-                vertexCode.insert(pos + 1, defineStr);
+                if (pos != std::string::npos)
+                    vertexCode.insert(pos + 1, "\n#define USE_GEOMETRY\n");
             }
         }
         catch (const std::exception &e)
@@ -46,16 +46,28 @@ namespace RealEngine
         }
 
         GLuint vertexShader = CompileShader(GL_VERTEX_SHADER, vertexCode.c_str());
-        CompilerErrors(vertexShader, "VERTEX");
+        if (CompilerErrors(vertexShader, "VERTEX")){
+            REALENGINE_ASSERT(false, "vertexShader compilation failed!!");
+            return;
+        }
 
         GLuint fragmentShader = CompileShader(GL_FRAGMENT_SHADER, fragmentCode.c_str());
-        CompilerErrors(fragmentShader, "FRAGMENT");
+        if (CompilerErrors(fragmentShader, "FRAGMENT")){
+            glDeleteShader(vertexShader);
+            REALENGINE_ASSERT(false, "fragmentShader compilation failed!!");
+            return;
+        }
 
         GLuint geometryShader = 0;
         if (!geometryCode.empty())
         {
             geometryShader = CompileShader(GL_GEOMETRY_SHADER, geometryCode.c_str());
-            CompilerErrors(geometryShader, "GEOMETRY");
+            if (CompilerErrors(geometryShader, "GEOMETRY")){
+                glDeleteShader(vertexShader);
+                glDeleteShader(fragmentShader);
+                REALENGINE_ASSERT(false, "geometryShader compilation failed!!");
+                return;
+            }
         }
 
         m_RendererID = glCreateProgram();
@@ -64,14 +76,22 @@ namespace RealEngine
         if (geometryShader != 0)
             glAttachShader(m_RendererID, geometryShader);
         glLinkProgram(m_RendererID);
-        CompilerErrors(m_RendererID, "PROGRAM");
+        bool notLinked = CompilerErrors(m_RendererID, "PROGRAM");
 
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
         if (geometryShader != 0)
-            glDeleteShader(geometryShader);
-
+        glDeleteShader(geometryShader);
+        
+        if (notLinked){
+            REALENGINE_ASSERT(false, "Linking failed!!");
+        }
         LOG_INFO("Shaders compiled successfully!!!");
+    }
+
+    OpenGLShader::~OpenGLShader()
+    {
+        Delete();
     }
 
     uint32_t OpenGLShader::CompileShader(uint32_t type, const char *source)
@@ -82,40 +102,49 @@ namespace RealEngine
         return shader;
     }
 
-    void OpenGLShader::Activate()
+    void OpenGLShader::Bind() const
     {
         glUseProgram(m_RendererID);
     }
 
-    void OpenGLShader::Delete()
+    void OpenGLShader::Unbind() const
+    {
+        glUseProgram(0);
+    }
+
+    void OpenGLShader::Delete() const
     {
         glDeleteProgram(m_RendererID);
     }
 
-    void OpenGLShader::CompilerErrors(unsigned int shader, const char *type)
+    bool OpenGLShader::CompilerErrors(unsigned int shader, const char *type)
     {
-        GLint hasCompiled;
-        std::string program = "PROGRAM";
+        GLint success;
         // Character array to store error message in
         char infoLog[1024];
-        if (type != program)
+        if (strcmp(type, "PROGRAM") != 0)
         {
-            glGetShaderiv(shader, GL_COMPILE_STATUS, &hasCompiled);
-            if (hasCompiled == GL_FALSE)
+            glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+            if (success == GL_FALSE)
             {
                 glGetShaderInfoLog(shader, 1024, NULL, infoLog);
                 LOG_ERROR("SHADER_COMPILATION_ERROR for: {} : {}", type, infoLog);
+                glDeleteShader(shader);
+                return true;
             }
         }
         else
         {
-            glGetProgramiv(shader, GL_LINK_STATUS, &hasCompiled);
-            if (hasCompiled == GL_FALSE)
+            glGetProgramiv(shader, GL_LINK_STATUS, &success);
+            if (success == GL_FALSE)
             {
                 glGetProgramInfoLog(shader, 1024, NULL, infoLog);
                 LOG_ERROR("SHADER_LINKING_ERROR for: {} : {}", type, infoLog);
+                glDeleteProgram(shader);
+                return true;
             }
         }
+        return false;
     }
 
     void OpenGLShader::SetVec3(const std::string &name, const glm::vec3 &value) const

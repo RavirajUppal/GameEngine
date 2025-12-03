@@ -29,6 +29,7 @@ target_include_directories(Engine PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb
 )
 
 target_precompile_headers(Engine PUBLIC
@@ -45,7 +46,7 @@ target_compile_definitions(Engine
     PRIVATE 
         IS_ENGINE_BUILD
         SHADER_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}/src/Resources/Shaders/\"
-        # TEXTURE_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}/src/Resources/Textures/\"
+        TEXTURE_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}/src/Resources/Textures/\"
 )
 
 

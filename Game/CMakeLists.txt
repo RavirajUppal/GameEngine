@@ -23,6 +23,8 @@ target_link_libraries(Game PRIVATE Engine)
 target_compile_definitions(Game
     PRIVATE
         IS_GAME_BUILD
+        SHADER_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}/src/Resources/Shaders/\"
+        TEXTURE_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}/src/Resources/Textures/\"
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")

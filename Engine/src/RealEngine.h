@@ -3,6 +3,12 @@
 #include "Logging/Log.h"
 #include "ImGui/ImGuiLayer.h"
 #include "Layer.h"
+#include "TimeStep.h"
+
+#include "Renderer/Renderer.h"
+#include "Renderer/OrthographicCameraController.h"
+#include "Renderer/VertexArray.h"
+#include "Renderer/Buffer.h"
 
 #include "Input/Input.h"
 #include "Input/KeyCodes.h"

@@ -3,6 +3,10 @@
 
 namespace RealEngine
 {
+    void OpenGLRendererAPI::Init()
+    {
+    }
+
     void OpenGLRendererAPI::SetClearColor(const glm::vec4 &color)
     {
         glClearColor(color.r, color.g, color.b, color.a);
