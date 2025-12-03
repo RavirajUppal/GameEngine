@@ -2,7 +2,7 @@
 #include "glm/gtc/type_ptr.hpp"
 
 namespace RealEngine{
-    
+
     std::unique_ptr<Renderer::SceneData> Renderer::m_SceneData = std::make_unique<SceneData>();
 
     void Renderer::Init()
@@ -32,5 +32,6 @@ namespace RealEngine{
     }
     void Renderer::OnWindowResize(uint32_t width, uint32_t height)
     {
+        RenderCommand::SetViewPort(0, 0, width, height);
     }
 }

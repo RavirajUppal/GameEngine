@@ -32,7 +32,7 @@ namespace RealEngine {
         GraphicsContext* m_Context;
         struct WindowData {
             std::string Title;
-            unsigned int Width, Height;
+            int Width, Height;
             bool VSync;
 
             EventCallbackFn EventCallback;

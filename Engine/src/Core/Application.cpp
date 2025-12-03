@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 #include "Events/KeyEvent.h"
 #include "ImGui/ImGuiLayer.h"
+#include "Renderer/Renderer.h"
 #include "time.h"
 #include <GLFW/glfw3.h>
 
@@ -32,6 +33,7 @@ namespace RealEngine
         dispatcher.Dispatch<WindowCloseEvent>([this](WindowCloseEvent& event) { return this->OnWindowClose(event); });
         // dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
         // LOG_INFO(e.ToString());
+        dispatcher.Dispatch<WindowResizeEvent>([this](WindowResizeEvent& event) { return this->OnWindowResize(event); });
 
         for(auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
         {
@@ -45,6 +47,17 @@ namespace RealEngine
     {
         m_Running = false;
         return true;
+    }
+
+    bool Application::OnWindowResize(WindowResizeEvent& e){
+        LOG_INFO("OnWindowResize width {},  height {} ", e.GetWidth(), e.GetHeight() );
+        if (e.GetWidth() == 0 || e.GetHeight() == 0){
+            m_Minimised = true;
+            return false;
+        }
+        m_Minimised = false;
+        Renderer::OnWindowResize(2* e.GetWidth(), 2* e.GetHeight());
+        return false;
     }
 
     void Application::PushLayer(Layer *layer)
@@ -77,13 +90,15 @@ namespace RealEngine
             TimeStep delta = time - m_LastFrameTime;
             m_LastFrameTime = time;
 
-            for(Layer* layer : m_LayerStack)
-                layer->OnUpdate(delta);
-            
-            m_ImGuiLayer->Begin();
-            for(Layer* layer : m_LayerStack)
-                layer->OnImGuiRender();
-            m_ImGuiLayer->End();
+            if(!m_Minimised){
+                for(Layer* layer : m_LayerStack)
+                    layer->OnUpdate(delta);
+                
+                m_ImGuiLayer->Begin();
+                for(Layer* layer : m_LayerStack)
+                    layer->OnImGuiRender();
+                m_ImGuiLayer->End();
+            }
 
             m_Windows->OnUpdate();
         }

@@ -4,6 +4,7 @@
 #include "ImGui/ImGuiLayer.h"
 #include "Layer.h"
 #include "TimeStep.h"
+#include "Events/Event.h"
 
 #include "Renderer/Renderer.h"
 #include "Renderer/OrthographicCameraController.h"

@@ -49,7 +49,7 @@ public:
         shaderLib.Get("Default")->Bind();
         texture->Bind();
         RealEngine::Renderer::Submit(shaderLib.Get("Default"), vao);
-        
+
         RealEngine::Renderer::EndScene();
 
     }
@@ -80,7 +80,11 @@ public:
 
             ImGui::End();
         }
+    }
 
+    void OnEvent(RealEngine::Event& event) override
+    {
+        cameraController.OnEvent(event);
     }
 
     private:

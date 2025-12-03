@@ -22,6 +22,7 @@ namespace RealEngine {
         virtual void Run();
         virtual void OnEvent(Event& e);
         virtual bool OnWindowClose(WindowCloseEvent& e);
+        virtual bool OnWindowResize(WindowResizeEvent& e);
         virtual void PushLayer(Layer* layer);
         virtual void PopLayer(Layer* layer);
         virtual void PushOverlay(Layer* layer);
@@ -29,6 +30,7 @@ namespace RealEngine {
         Window& GetWindow() { return *m_Windows; }
     private:
         bool m_Running = true;
+        bool m_Minimised = false;
         std::unique_ptr<Window> m_Windows;
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_LayerStack;

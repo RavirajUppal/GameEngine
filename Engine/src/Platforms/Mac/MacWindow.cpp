@@ -40,6 +40,8 @@ namespace RealEngine
         m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), nullptr, nullptr);
         m_Context = new OpenGLContext(m_Window);
         m_Context->Init();
+        glfwGetFramebufferSize(m_Window, &m_Data.Width, &m_Data.Height);
+        glViewport(0 ,0, m_Data.Width, m_Data.Height);
         // glfwMakeContextCurrent(m_Window);
         // auto success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
         // REALENGINE_ASSERT(success, "Could not load glad!");
