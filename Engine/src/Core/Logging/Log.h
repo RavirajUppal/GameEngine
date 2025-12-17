@@ -19,6 +19,10 @@
     #define LOG_INFO(...)     ::RealEngine::Log::GetLogger()->Info(RealEngine::LogSource::Client, __VA_ARGS__)
     #define LOG_WARN(...)     ::RealEngine::Log::GetLogger()->Warn(RealEngine::LogSource::Client, __VA_ARGS__)
     #define LOG_ERROR(...)    ::RealEngine::Log::GetLogger()->Error(RealEngine::LogSource::Client, __VA_ARGS__)
+#elif defined(IS_EDITOR_BUILD)
+    #define LOG_INFO(...)     ::RealEngine::Log::GetLogger()->Info(RealEngine::LogSource::Editor, __VA_ARGS__)
+    #define LOG_WARN(...)     ::RealEngine::Log::GetLogger()->Warn(RealEngine::LogSource::Editor, __VA_ARGS__)
+    #define LOG_ERROR(...)    ::RealEngine::Log::GetLogger()->Error(RealEngine::LogSource::Editor, __VA_ARGS__)
 #else
     #define LOG_INFO(...)     ::RealEngine::Log::GetLogger()->Info(RealEngine::LogSource::None, __VA_ARGS__)
     #define LOG_WARN(...)     ::RealEngine::Log::GetLogger()->Warn(RealEngine::LogSource::None, __VA_ARGS__)

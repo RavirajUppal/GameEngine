@@ -1,5 +1,7 @@
+#include "imgui.h"
+
 #include "Application.h"
-#include "EntryPoint.h"
+// #include "EntryPoint.h"
 #include "Logging/Log.h"
 #include "ImGui/ImGuiLayer.h"
 #include "Layer.h"

@@ -14,6 +14,7 @@
                 "IMGUI_IMPL_OPENGL_LOADER_CUSTOM",
                 "IS_ENGINE_BUILD",
                 "IS_GAME_BUILD",
+                "IS_EDITOR_BUILD",
                 "SHADER_DIR=\"src/Resources/Shaders/\"",
                 "TEXTURE_DIR=\"src/Resources/Textures/\""
 

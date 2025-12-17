@@ -1,7 +1,6 @@
 #pragma once
 #include "Logging/Log.h"
 
-#include "imgui.h"
 
 extern RealEngine::Application* RealEngine::CreateApplication();
 

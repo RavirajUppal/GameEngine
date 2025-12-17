@@ -17,6 +17,8 @@ namespace RealEngine
         {
         case LogSource::Core:
             return "[Core]";
+        case LogSource::Editor:
+            return "[Editor]";
         case LogSource::Client:
             return "[Client]";
         default:

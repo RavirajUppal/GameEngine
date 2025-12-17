@@ -10,6 +10,13 @@ add_executable(Editor ${EDITOR_SOURCES})
 
 target_link_libraries(Editor PRIVATE Engine)
 
+target_compile_definitions(Editor
+    PRIVATE
+        IS_EDITOR_BUILD
+        SHADER_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}/src/Resources/Shaders/\"
+        TEXTURE_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}/src/Resources/Textures/\"
+)
+
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(Editor PUBLIC DEBUG)
 else()

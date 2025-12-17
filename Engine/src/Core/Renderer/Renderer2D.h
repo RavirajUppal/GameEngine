@@ -1,3 +1,5 @@
+#pragma once
+
 #include <memory>
 #include "Renderer/OrthographicCamera.h"
 #include "Renderer/Texture.h"
