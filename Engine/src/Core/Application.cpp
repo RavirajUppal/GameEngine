@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "Application.h"
 #include "Logging/Log.h"
-#include <glad/glad.h>
 #include "Events/KeyEvent.h"
 #include "ImGui/ImGuiLayer.h"
 #include "Renderer/Renderer.h"
 #include "time.h"
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 namespace RealEngine

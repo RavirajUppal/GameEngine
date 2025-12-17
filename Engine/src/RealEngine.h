@@ -10,6 +10,8 @@
 #include "Renderer/OrthographicCameraController.h"
 #include "Renderer/VertexArray.h"
 #include "Renderer/Buffer.h"
+#include "Renderer/Renderer2D.h"
+#include "Renderer/Framebuffer.h"
 
 #include "Input/Input.h"
 #include "Input/KeyCodes.h"

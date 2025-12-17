@@ -19,6 +19,7 @@ namespace RealEngine {
         Application();
         virtual ~Application();
         static Application& Get() { return *s_Instance; }
+        void Close() { m_Running = false; }
         virtual void Run();
         virtual void OnEvent(Event& e);
         virtual bool OnWindowClose(WindowCloseEvent& e);

@@ -3,7 +3,7 @@
 #include "Platforms/OpenGL/OpenGLVertexArray.h"
 
 namespace RealEngine{
-    VertexArray* VertexArray::Create(){
+    std::shared_ptr<VertexArray> VertexArray::Create(){
         switch(RendererAPI::GetAPI()){
             case RendererAPI::API::None :
             case RendererAPI::API::Direct3D11 :
@@ -13,7 +13,7 @@ namespace RealEngine{
                 REALENGINE_ASSERT(false, "RendererAPI is currently not supported!");
                 return nullptr;
             case RendererAPI::API::OpenGL:
-                return new OpenGLVertexArray();
+                return std::make_shared<OpenGLVertexArray>();
         }
         REALENGINE_ASSERT(false, "Unknown RendererAPI!");
         return nullptr;

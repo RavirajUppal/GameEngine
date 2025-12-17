@@ -7,6 +7,7 @@ namespace RealEngine
     class REALENGINE_API OpenGLVertexBuffer : public VertexBuffer
     {
     public:
+        OpenGLVertexBuffer(uint32_t size);
         OpenGLVertexBuffer(float* vertices, uint32_t size);
         ~OpenGLVertexBuffer();
 
@@ -14,6 +15,7 @@ namespace RealEngine
         void Unbind() const override;
         void SetLayout(const BufferLayout& layout) override;
         const BufferLayout& GetLayout() const override;
+        void SetData(const void* data, uint32_t size) override;
 
     private:
         uint32_t m_RendererID;

@@ -6,7 +6,7 @@
 
 namespace RealEngine
 {
-    VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size)
+    std::shared_ptr<VertexBuffer> VertexBuffer::Create(uint32_t size)
     {
         switch (RendererAPI::GetAPI())
         {
@@ -14,7 +14,7 @@ namespace RealEngine
             REALENGINE_ASSERT(false, "RendererAPI::None is currently not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return new OpenGLVertexBuffer(vertices, size);
+            return std::make_shared<OpenGLVertexBuffer>(size);
         default:
             // LOG_ERROR("{} RendererAPI is currently not supported!", RendererAPI::GetAPI());
             REALENGINE_ASSERT(false, "Unsupported RendererAPI!");
@@ -25,7 +25,7 @@ namespace RealEngine
         return nullptr;
     }
 
-    IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t count)
+    std::shared_ptr<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size)
     {
         switch (RendererAPI::GetAPI())
         {
@@ -33,7 +33,26 @@ namespace RealEngine
             REALENGINE_ASSERT(false, "RendererAPI::None is currently not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return new OpenGLIndexBuffer(indices, count);
+            return std::make_shared<OpenGLVertexBuffer>(vertices, size);
+        default:
+            // LOG_ERROR("{} RendererAPI is currently not supported!", RendererAPI::GetAPI());
+            REALENGINE_ASSERT(false, "Unsupported RendererAPI!");
+            return nullptr;
+        }
+
+        REALENGINE_ASSERT(false, "Unknown RendererAPI!");
+        return nullptr;
+    }
+
+    std::shared_ptr<IndexBuffer> IndexBuffer::Create(uint32_t* indices, uint32_t count)
+    {
+        switch (RendererAPI::GetAPI())
+        {
+        case RendererAPI::API::None:
+            REALENGINE_ASSERT(false, "RendererAPI::None is currently not supported!");
+            return nullptr;
+        case RendererAPI::API::OpenGL:
+            return std::make_shared<OpenGLIndexBuffer>(indices, count);
         default:
             // LOG_ERROR("{} RendererAPI is currently not supported!", RendererAPI::GetAPI());
             REALENGINE_ASSERT(false, "Unsupported RendererAPI!");

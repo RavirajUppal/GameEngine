@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core.h"
-#include "glm/glm.hpp"
+#include <glm/glm.hpp>
 
 namespace RealEngine
 {
@@ -18,9 +18,13 @@ namespace RealEngine
 	    virtual void SetFloat4(const std::string& name, float x, float y, float z, float w) const = 0;
 	    virtual void SetFloat3(const std::string& name, float x, float y, float z) const = 0;
 	    virtual void SetFloat1(const std::string& name, float x) const = 0;
+		virtual void SetFloat1Array(const std::string &name, float *value, uint32_t count) const = 0;
 	    virtual void SetInt1(const std::string& name, int x) const = 0;
+	    virtual void SetInt1Array(const std::string& name, int* value, uint32_t count) const = 0;
 	    virtual void SetMat4(const std::string &name, const float *matrix) const = 0;
 	    virtual void SetVecOfMat4(const std::string &name, const std::vector<glm::mat4>& matrix) const = 0;
+
+		virtual void PrintActiveUniforms() = 0;
 
         static std::shared_ptr<Shader> Create(const std::string& name, std::string_view vertexFilePath, std::string_view fragmentFilePath, std::string_view geometryFilePath = "");
     };

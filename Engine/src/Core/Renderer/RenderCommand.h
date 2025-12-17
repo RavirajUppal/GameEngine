@@ -24,8 +24,8 @@ namespace RealEngine
             s_RendererAPI->Clear();
         }
 
-        static void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray){
-            s_RendererAPI->DrawIndexed(vertexArray);
+        static void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t indicesCount = 0){
+            s_RendererAPI->DrawIndexed(vertexArray, indicesCount);
         }
         
     private:

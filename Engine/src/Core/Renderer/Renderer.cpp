@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Renderer/Renderer2D.h"
 #include "glm/gtc/type_ptr.hpp"
 
 namespace RealEngine{
@@ -8,6 +9,7 @@ namespace RealEngine{
     void Renderer::Init()
     {
         RenderCommand::Init();
+        Renderer2D::Init();
     }
 
     void Renderer::BeginScene(OrthographicCamera& camera)
@@ -27,7 +29,6 @@ namespace RealEngine{
     {
         shader->Bind();
         shader->SetMat4("u_ViewProjection", glm::value_ptr(m_SceneData->ViewProjectionMatrix));
-        vertexArray->Bind();
         RenderCommand::DrawIndexed(vertexArray);
     }
     void Renderer::OnWindowResize(uint32_t width, uint32_t height)

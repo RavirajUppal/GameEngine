@@ -200,12 +200,38 @@ namespace RealEngine
         }
     }
 
+    void OpenGLShader::SetFloat1Array(const std::string &name, float *value, uint32_t count) const
+    {
+        GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
+        if (loc != -1)
+        {
+            glUniform1fv(loc, count, value);
+        }
+        else
+        {
+            LOG_ERROR("Warning: uniform {} not found. ", name);
+        }
+    }
+
     void OpenGLShader::SetInt1(const std::string &name, int x) const
     {
         GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
         if (loc != -1)
         {
             glUniform1i(loc, x);
+        }
+        else
+        {
+            LOG_ERROR("Warning: uniform {} not found. ", name);
+        }
+    }
+
+    void OpenGLShader::SetInt1Array(const std::string &name, int *value, uint32_t count) const
+    {
+        GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
+        if (loc != -1)
+        {
+            glUniform1iv(loc, count, value);
         }
         else
         {
