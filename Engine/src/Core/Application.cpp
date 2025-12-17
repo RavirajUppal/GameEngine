@@ -19,7 +19,7 @@ namespace RealEngine
         m_Windows = std::unique_ptr<Window>(Window::Create());
         m_Windows->SetEventCallback([this](Event& e){ this->OnEvent(e); });
         m_ImGuiLayer = new ImGuiLayer();
-        PushLayer(m_ImGuiLayer);
+        PushOverlay(m_ImGuiLayer);
     }
 
     Application::~Application()
@@ -37,9 +37,9 @@ namespace RealEngine
 
         for(auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
         {
-            (*--it)->OnEvent(e);
             if(e.m_Handled)
                 break;
+            (*--it)->OnEvent(e);
         }
     }
 

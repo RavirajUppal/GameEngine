@@ -29,6 +29,7 @@ namespace RealEngine {
         virtual void PushOverlay(Layer* layer);
         virtual void PopOverlay(Layer* layer);
         Window& GetWindow() { return *m_Windows; }
+        ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
     private:
         bool m_Running = true;
         bool m_Minimised = false;

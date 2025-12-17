@@ -54,7 +54,8 @@ namespace RealEngine
     void EditorLayer::OnUpdate(TimeStep delta)
     {
         // LOG_INFO("EditorLayer::Update");
-        cameraController.OnUpdate(delta);
+        if (m_WindowFocused)
+            cameraController.OnUpdate(delta);
         framebuffer->Bind();
         RenderCommand::SetClearColor({0.3f, 0.4f, 0.5f, 1.0f});
         RenderCommand::Clear();
@@ -179,7 +180,12 @@ namespace RealEngine
             ImGui::End();
 
             ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
-            ImGui::Begin("Viewport");  
+
+            ImGui::Begin("Viewport");
+            m_WindowFocused = ImGui::IsWindowFocused();
+            m_WindowHovered = ImGui::IsWindowHovered();
+            Application::Get().GetImGuiLayer()->SetBlockEvents(!m_WindowFocused || !m_WindowHovered);
+
             ImVec2 area = ImGui::GetContentRegionAvail();
             if(area.x != framebuffer->GetSpecification().Width || area.y != framebuffer->GetSpecification().Height){
                 framebuffer->Resize(area.x, area.y);

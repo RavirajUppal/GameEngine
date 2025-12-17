@@ -7,6 +7,7 @@
 #include "backends/imgui_impl_opengl3.h"
 
 #include <GLFW/glfw3.h>
+#include "ImGuiLayer.h"
 
 namespace RealEngine
 {
@@ -78,6 +79,15 @@ namespace RealEngine
     {
         static bool show_demo_window = true;
         ImGui::ShowDemoWindow(&show_demo_window);
+    }
+
+    void ImGuiLayer::OnEvent(Event &event)
+    {
+        if (m_BlockEvents){
+            ImGuiIO& io = ImGui::GetIO();
+            event.m_Handled |= event.IsInCategory(EventCategory::Mouse) & io.WantCaptureMouse;
+            // event.m_Handled |= event.IsInCategory(EventCategory::Keyboard) & io.WantCaptureKeyboard;
+        }
     }
 
     void ImGuiLayer::End()

@@ -19,12 +19,15 @@ namespace RealEngine
         ShaderLibrary shaderLib;
         OrthographicCameraController cameraController;
         std::shared_ptr<Texture2D> texture;
+        std::shared_ptr<Texture2D> newTexture;
 
         std::shared_ptr<Framebuffer> framebuffer;
         std::shared_ptr<VertexArray> vao;
         std::shared_ptr<VertexBuffer> vbo;
         std::shared_ptr<IndexBuffer> ibo;
 
-        std::shared_ptr<Texture2D> newTexture;
+        bool m_WindowFocused = false;
+        bool m_WindowHovered = false;
+
     };
 }
